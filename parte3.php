@@ -1,27 +1,35 @@
 <?php
 $texto = "PHP no está muerto… solo sigue trabajando silenciosamente en el 80% de Internet";
 
-// 1. Todo a minúsculas
+// Todo a minúsculas
 $textoLimpio = strtolower($texto);
 
-// 2. Convertir la frase en un array de palabras
-// Usamos una expresión regular básica o explode para separar por espacios
+// Convertir la frase en un array de palabras
 $palabrasRaw = explode(" ", $textoLimpio);
 
-// 3. Filtrar palabras de menos de 3 letras
+// Filtrar palabras de menos de 3 letras y limpiar puntuación
 $palabrasFiltradas = [];
+$totalAnalizadas = 0; // Contador manual para no usar count() al final
+
 foreach ($palabrasRaw as $p) {
-    // Quitamos puntos o comas que puedan molestar
     $p = trim($p, "….,"); 
     if (strlen($p) >= 3) {
         $palabrasFiltradas[] = $p;
+        $totalAnalizadas++;
     }
 }
 
-// 4. Contar frecuencias
-$frecuencias = array_count_values($palabrasFiltradas);
+// Contar frecuencias manualmente
+$frecuencias = [];
+foreach ($palabrasFiltradas as $palabra) {
+    if (isset($frecuencias[$palabra])) {
+        $frecuencias[$palabra]++;
+    } else {
+        $frecuencias[$palabra] = 1;
+    }
+}
 
-echo "Total palabras analizadas (>=3 letras): " . count($palabrasFiltradas) . "\n";
+echo "Total palabras analizadas (>=3 letras): " . $totalAnalizadas . "\n";
 echo "Palabras que se repiten:\n";
 
 $maxRepeticiones = 0;
