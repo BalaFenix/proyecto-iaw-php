@@ -1,5 +1,5 @@
 <?php
-// Datos de los estudiantes de la consultoría CloudTech
+// Definimos el array con los datos iniciales que nos pide el ejercicio
 $estudiantes = [
     "Ana" => [8, 7, 9],
     "Luis" => [5, 6, 4],
@@ -7,48 +7,47 @@ $estudiantes = [
     "Carlos" => [6, 6, 6]
 ];
 
-// Funcion para calcular el promedio usando unicamente bucles
+// Función para sacar la media de un array de notas usando un bucle
 function calcularPromedio($notas) {
-    $sumaTotal = 0;
-    $totalNotas = 0;
+    $suma = 0;
+    $cantidad = 0;
     
-    // Recorremos el array de notas para sumar sus valores manualmente
+    // Usamos un foreach para sumar las notas y contarlas una a una
     foreach ($notas as $nota) {
-        $sumaTotal += $nota;
-        $totalNotas++;
+        $suma += $nota;
+        $cantidad++;
     }
     
-    // Evitamos division por cero si el array estuviera vacio
-    if ($totalNotas === 0) {
+    // Si no hay notas devolvemos 0 para evitar errores
+    if ($cantidad == 0) {
         return 0;
     }
     
-    return $sumaTotal / $totalNotas;
+    return $suma / $cantidad;
 }
 
-// Variables de control para el informe final
+// Variables para el resumen final
 $aprobados = 0;
 $suspendidos = 0;
 $mejorPromedio = 0;
 $mejorEstudiante = "";
 
-echo "REPORTES DE RENDIMIENTO ACADEMICO\n";
-echo "-------------------------------------\n";
+echo "--- RESULTADOS DE LOS ESTUDIANTES ---\n";
 
-// Procesamiento de la lista de estudiantes
 foreach ($estudiantes as $nombre => $notas) {
     $promedio = calcularPromedio($notas);
     
-    // Determinacion del estado segun la politica de la empresa 
+    // Decidimos si está aprobado o no
+    $estado = ($promedio >= 6) ? "Aprobado" : "Suspenso";
+    
+    // Contadores para el final
     if ($promedio >= 6) {
-        $estado = "Aprobado";
         $aprobados++;
     } else {
-        $estado = "Suspenso";
         $suspendidos++;
     }
     
-    // identificar el mejor promedio
+    // Para encontrar al mejor estudiante de la lista
     if ($promedio > $mejorPromedio) {
         $mejorPromedio = $promedio;
         $mejorEstudiante = $nombre;
@@ -58,8 +57,7 @@ foreach ($estudiantes as $nombre => $notas) {
 }
 
 echo "-------------------------------------\n";
-echo "RESUMEN FINAL:\n";
-echo "Total de alumnos aprobados: $aprobados\n";
-echo "Total de alumnos suspendidos: $suspendidos\n";
-echo "Mencion especial: $mejorEstudiante con una calificacion de " . number_format($mejorPromedio, 2) . "\n";
+echo "Total aprobados: $aprobados\n";
+echo "Total suspendidos: $suspendidos\n";
+echo "El estudiante con mejor nota es: $mejorEstudiante con un " . number_format($mejorPromedio, 2) . "\n";
 ?>
