@@ -5,7 +5,7 @@ $carrito = [
     ["producto" => "Teclado", "precio" => 45, "cantidad" => 1],
 ];
 
-// Función para sacar el total bruto del carrito
+// Función para sacar el total bruto del carrito usando un foreach
 function calcularTotal($carrito) {
     $suma = 0;
     foreach ($carrito as $item) {
@@ -15,15 +15,17 @@ function calcularTotal($carrito) {
 }
 
 echo "DETALLE DEL CARRITO:\n";
+
+// Usamos otro foreach para mostrar los productos línea por línea
 foreach ($carrito as $item) {
     $subtotal = $item['precio'] * $item['cantidad'];
-    echo "- {$item['producto']}: {$item['precio']}€ x {$item['cantidad']} = {$subtotal}€\n";
+    echo "- " . $item['producto'] . ": " . $item['precio'] . "€ x " . $item['cantidad'] . " = " . $subtotal . "€\n";
 }
 
 $totalSinDescuento = calcularTotal($carrito);
 $descuentoPorcentaje = 0;
 
-// Aplicamos la lógica de descuentos solicitada
+// Lógica de descuentos con condiciones simples
 if ($totalSinDescuento > 1000) {
     $descuentoPorcentaje = 10;
 } elseif ($totalSinDescuento > 500) {
@@ -34,7 +36,7 @@ $cantidadDescontada = $totalSinDescuento * ($descuentoPorcentaje / 100);
 $totalFinal = $totalSinDescuento - $cantidadDescontada;
 
 echo "----------------------------\n";
-echo "Total bruto: $totalSinDescuento €\n";
-echo "Descuento aplicado: $descuentoPorcentaje%\n";
-echo "TOTAL FINAL: $totalFinal €\n";
+echo "Total bruto: " . $totalSinDescuento . " €\n";
+echo "Descuento aplicado: " . $descuentoPorcentaje . "%\n";
+echo "TOTAL FINAL: " . $totalFinal . " €\n";
 ?>
