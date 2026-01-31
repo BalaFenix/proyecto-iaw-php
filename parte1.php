@@ -1,5 +1,5 @@
 <?php
-// Definimos el array con los datos iniciales que nos pide el ejercicio
+// Datos de los estudiantes de la consultoría CloudTech
 $estudiantes = [
     "Ana" => [8, 7, 9],
     "Luis" => [5, 6, 4],
@@ -7,34 +7,48 @@ $estudiantes = [
     "Carlos" => [6, 6, 6]
 ];
 
-// Función para sacar la media de un array de notas
+// Funcion para calcular el promedio usando unicamente bucles
 function calcularPromedio($notas) {
-    // array_sum suma todos los valores y count nos da cuántos hay
-    return array_sum($notas) / count($notas);
+    $sumaTotal = 0;
+    $totalNotas = 0;
+    
+    // Recorremos el array de notas para sumar sus valores manualmente
+    foreach ($notas as $nota) {
+        $sumaTotal += $nota;
+        $totalNotas++;
+    }
+    
+    // Evitamos division por cero si el array estuviera vacio
+    if ($totalNotas === 0) {
+        return 0;
+    }
+    
+    return $sumaTotal / $totalNotas;
 }
 
-// Variables para el resumen final
+// Variables de control para el informe final
 $aprobados = 0;
 $suspendidos = 0;
 $mejorPromedio = 0;
 $mejorEstudiante = "";
 
-echo "--- RESULTADOS DE LOS ESTUDIANTES ---\n";
+echo "REPORTES DE RENDIMIENTO ACADEMICO\n";
+echo "-------------------------------------\n";
 
+// Procesamiento de la lista de estudiantes
 foreach ($estudiantes as $nombre => $notas) {
     $promedio = calcularPromedio($notas);
     
-    // Decidimos si está aprobado o no
-    $estado = ($promedio >= 6) ? "Aprobado" : "Suspenso";
-    
-    // Contadores para el final
+    // Determinacion del estado segun la politica de la empresa 
     if ($promedio >= 6) {
+        $estado = "Aprobado";
         $aprobados++;
     } else {
+        $estado = "Suspenso";
         $suspendidos++;
     }
     
-    // Para encontrar al mejor estudiante de la lista
+    // identificar el mejor promedio
     if ($promedio > $mejorPromedio) {
         $mejorPromedio = $promedio;
         $mejorEstudiante = $nombre;
@@ -44,7 +58,8 @@ foreach ($estudiantes as $nombre => $notas) {
 }
 
 echo "-------------------------------------\n";
-echo "Total aprobados: $aprobados\n";
-echo "Total suspendidos: $suspendidos\n";
-echo "El estudiante con mejor nota es: $mejorEstudiante con un " . number_format($mejorPromedio, 2) . "\n";
+echo "RESUMEN FINAL:\n";
+echo "Total de alumnos aprobados: $aprobados\n";
+echo "Total de alumnos suspendidos: $suspendidos\n";
+echo "Mencion especial: $mejorEstudiante con una calificacion de " . number_format($mejorPromedio, 2) . "\n";
 ?>
